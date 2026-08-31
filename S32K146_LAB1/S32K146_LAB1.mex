@@ -34,6 +34,20 @@
                </options>
                <dependencies/>
                <pins>
+                  <pin peripheral="PORTC" signal="port, 13" pin_num="70" pin_signal="PTC13">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                        <pin_feature name="PE" value="state_1"/>
+                        <pin_feature name="PS" value="state_0"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="PORTC" signal="port, 12" pin_num="71" pin_signal="PTC12">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                        <pin_feature name="PE" value="state_1"/>
+                        <pin_feature name="PS" value="state_0"/>
+                     </pin_features>
+                  </pin>
                   <pin peripheral="PORTD" signal="port, 0" pin_num="4" pin_signal="PTD0">
                      <pin_features>
                         <pin_feature name="direction" value="OUTPUT"/>

@@ -54,6 +54,10 @@ volatile int exit_code = 0;
 #define BLUE_LED_OFF()     (IP_PTD->PCOR = (1U << BLUE_LED_PIN))   /* 输出低 -> 蓝灯灭 */
 #define BLUE_LED_TOGGLE()  (IP_PTD->PTOR = (1U << BLUE_LED_PIN))  /* 翻转输出 */
 
+/* 按键读取 - PTC12(SW2) / PTC13(SW3), 按下为高电平(active-high, 内部下拉) */
+#define SW2_PRESSED()      ((IP_PTC->PDIR & (1U << 12)) != 0U)
+#define SW3_PRESSED()      ((IP_PTC->PDIR & (1U << 13)) != 0U)
+
 /* 软件延时 - 基于48MHz主频, 约1ms (可根据实际主频调整) */
 static void delay_ms(uint32 ms)
 {
@@ -65,6 +69,47 @@ static void delay_ms(uint32 ms)
             __asm volatile("nop");
         }
     }
+}
+
+/* 按键检测 - 非阻塞, 配合主循环10ms tick */
+/* 按下累计 5 tick (50ms) 触发一次, 松开后才能再次触发 */
+#define KEY_DEBOUNCE_TICKS    (5U)
+
+/* 按键状态 */
+typedef struct {
+    uint8 cnt;   /* 按下累计tick数 */
+    uint8 trg;   /* 是否已触发过(锁定) */
+} KeyState_t;
+
+/*!
+ * \brief 扫描一次按键状态
+ * \param ks      按键状态指针
+ * \param pressed 当前是否按下 (1=按下, 0=松开)
+ * \return 1=本次触发翻转, 0=无触发
+ */
+static uint8 key_scan(KeyState_t *ks, uint8 pressed)
+{
+    uint8 fire = 0U;
+    if (pressed)
+    {
+        if (!ks->trg)
+        {
+            ks->cnt++;
+            if (ks->cnt >= KEY_DEBOUNCE_TICKS)
+            {
+                fire = 1U;
+                ks->trg = 1U;   /* 触发后锁定, 等松开 */
+                ks->cnt = 0U;
+            }
+        }
+    }
+    else
+    {
+        /* 松开 -> 清零, 准备下一次 */
+        ks->cnt = 0U;
+        ks->trg = 0U;
+    }
+    return fire;
 }
 
 /*!
@@ -84,19 +129,40 @@ int main(void)
     Port_Ci_Port_Ip_Init(NUM_OF_CONFIGURED_PINS_PortContainer_0_BOARD_InitPeripherals,
                          g_pin_mux_InitConfigArr_PortContainer_0_BOARD_InitPeripherals);
 
-    /* 以0.5Hz闪烁: 周期2000ms = 1000ms亮 + 1000ms灭, 每1000ms翻转一次 */
+    uint32 blue_toggle_cnt = 0U;  /* 蓝灯翻转计时 (ms) */
+    uint8  blue_auto = 1U;        /* 蓝灯自动翻转使能 */
+    KeyState_t sw2_key = {0};     /* SW2 按键状态 */
+    KeyState_t sw3_key = {0};     /* SW3 按键状态 */
+
     for(;;)
     {
-        RED_LED_TOGGLE();
-        delay_ms(1000U);
-        RED_LED_TOGGLE();
-        GREEN_LED_TOGGLE();
-        delay_ms(1000U);
-        GREEN_LED_TOGGLE();
-        BLUE_LED_TOGGLE();
-        delay_ms(1000U);
-        BLUE_LED_TOGGLE();
-        delay_ms(1000U);
+        /* 10ms 循环周期, 兼顾蓝灯计时和按键扫描 */
+        delay_ms(10U);
+        blue_toggle_cnt += 10U;
+
+        /* SW2 按下50ms触发 -> 切换绿灯 + 关闭蓝灯 */
+        if (key_scan(&sw2_key, SW2_PRESSED() ? 1U : 0U))
+        {
+            GREEN_LED_TOGGLE();
+            BLUE_LED_OFF();
+            blue_auto = 0U;
+        }
+
+        /* SW3 按下50ms触发 -> 切换红灯 + 关闭蓝灯 */
+        if (key_scan(&sw3_key, SW3_PRESSED() ? 1U : 0U))
+        {
+            RED_LED_TOGGLE();
+            BLUE_LED_OFF();
+            blue_auto = 0U;
+        }
+
+        /* 蓝灯 1Hz 自动翻转 (500ms 亮 + 500ms 灭) */
+        if (blue_auto && blue_toggle_cnt >= 500U)
+        {
+            BLUE_LED_TOGGLE();
+            blue_toggle_cnt = 0U;
+        }
+
         if(exit_code != 0)
         {
             break;

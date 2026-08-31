@@ -119,6 +119,8 @@ extern "C"{
 PortContainer_0_BOARD_InitPeripherals:
 - options: {callFromInitBoot: 'true', coreID: core0}
 - pin_list:
+  - {pin_num: '70', peripheral: PORTC, signal: 'port, 13', pin_signal: PTC13, direction: INPUT, PE: state_1, PS: state_0}
+  - {pin_num: '71', peripheral: PORTC, signal: 'port, 12', pin_signal: PTC12, direction: INPUT, PE: state_1, PS: state_0}
   - {pin_num: '4', peripheral: PORTD, signal: 'port, 0', pin_signal: PTD0, direction: OUTPUT, initValue: state_0}
   - {pin_num: '28', peripheral: PORTD, signal: 'port, 16', pin_signal: PTD16, direction: OUTPUT, initValue: state_0}
   - {pin_num: '29', peripheral: PORTD, signal: 'port, 15', pin_signal: PTD15, direction: OUTPUT, initValue: state_0}
@@ -131,6 +133,32 @@ PortContainer_0_BOARD_InitPeripherals:
 
 /* Generate array of configured pin structures */
 Port_Ci_Port_Ip_PinSettingsConfig g_pin_mux_InitConfigArr_PortContainer_0_BOARD_InitPeripherals[NUM_OF_CONFIGURED_PINS_PortContainer_0_BOARD_InitPeripherals] = {
+    {
+        .portBase        = IP_PORTC,
+        .gpioBase        = IP_PTC,
+        .pinPortIdx      = 12U,
+        .pullConfig      = PORT_INTERNAL_PULL_DOWN_ENABLED,
+        .driveStrength   = PORT_DRIVE_STRENGTH_LOW,
+        .passiveFilter   = (boolean)FALSE,
+        .mux             = PORT_MUX_AS_GPIO,
+        .lockRegister    = PORT_LOCK_REGISTER_DISABLED,
+        .direction       = PORT_CI_PORT_PIN_IN,
+        .digitalFilter   = (boolean)FALSE,
+        .initValue       = 0U,
+    },
+    {
+        .portBase        = IP_PORTC,
+        .gpioBase        = IP_PTC,
+        .pinPortIdx      = 13U,
+        .pullConfig      = PORT_INTERNAL_PULL_DOWN_ENABLED,
+        .driveStrength   = PORT_DRIVE_STRENGTH_LOW,
+        .passiveFilter   = (boolean)FALSE,
+        .mux             = PORT_MUX_AS_GPIO,
+        .lockRegister    = PORT_LOCK_REGISTER_DISABLED,
+        .direction       = PORT_CI_PORT_PIN_IN,
+        .digitalFilter   = (boolean)FALSE,
+        .initValue       = 0U,
+    },
     {
         .portBase        = IP_PORTD,
         .gpioBase        = IP_PTD,
