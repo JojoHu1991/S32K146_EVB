@@ -34,3 +34,4 @@ desktop.ini
 *.swp
 *.swo
 *~
+/Debug_FLASH/

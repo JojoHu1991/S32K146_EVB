@@ -1,9 +1,0 @@
-LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
-LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
-LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=win32
-configDescList=org.eclipse.launchbar.core.descriptorType.default\:S32K146_LAB1_Debug_FLASHER_S32Debug,org.eclipse.launchbar.core.descriptorType.default\:S32K146_LAB1_Debug_FLASH_S32Debug,org.eclipse.launchbar.core.descriptorType.default\:S32K146_LAB1_Debug_RAM_S32Debug,org.eclipse.launchbar.core.descriptorType.default\:S32K146_LAB1_Release_FLASHER_S32Debug,org.eclipse.launchbar.core.descriptorType.default\:S32K146_LAB1_Release_FLASH_S32Debug,org.eclipse.launchbar.core.descriptorType.default\:S32K146_LAB1_Release_RAM_S32Debug,org.eclipse.launchbar.core.descriptorType.default\:S32K146_LAB1 Debug_FLASH
-eclipse.preferences.version=1
-org.eclipse.launchbar.core.descriptorType.default\:S32K146_LAB1\ Debug_FLASH/activeLaunchMode=debug
-org.eclipse.launchbar.core.descriptorType.default\:S32K146_LAB1\ Debug_FLASH/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
-org.eclipse.launchbar.core.descriptorType.default\:S32K146_LAB1_Debug_FLASHER_S32Debug/activeLaunchMode=debug
-org.eclipse.launchbar.core.descriptorType.default\:S32K146_LAB1_Debug_FLASHER_S32Debug/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local

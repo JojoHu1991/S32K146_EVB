@@ -1,7 +1,0 @@
-17:04:33 **** Clean-only build of configuration Debug_FLASH for project S32K146_LAB1 ****
-make -j20 clean 
-rm -rf ./*
- 
-
-17:04:34 Build Finished. 0 errors, 0 warnings. (took 392ms)
-
