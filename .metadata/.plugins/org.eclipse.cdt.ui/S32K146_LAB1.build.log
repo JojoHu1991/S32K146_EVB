@@ -1,11 +1,7 @@
-16:42:21 **** Incremental Build of configuration Debug_FLASH for project S32K146_LAB1 ****
-make -j20 all 
-Invoking: Standard S32DS Print Size
-arm-none-eabi-size --format=berkeley S32K146_LAB1.elf
-   text	   data	    bss	    dec	    hex	filename
-  18848	    128	   4400	  23376	   5b50	S32K146_LAB1.elf
-Finished building: S32K146_LAB1.siz
+17:04:33 **** Clean-only build of configuration Debug_FLASH for project S32K146_LAB1 ****
+make -j20 clean 
+rm -rf ./*
  
 
-16:42:22 Build Finished. 0 errors, 0 warnings. (took 244ms)
+17:04:34 Build Finished. 0 errors, 0 warnings. (took 392ms)
 

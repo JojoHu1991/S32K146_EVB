@@ -1,0 +1,36 @@
+# S32DS / Eclipse build output
+Debug/
+Release/
+
+# Object files and binaries
+*.o
+*.obj
+*.elf
+*.bin
+*.hex
+*.srec
+*.map
+*.lst
+
+# Eclipse generated makefiles
+*.mk
+makefile
+objects.mk
+sources.mk
+subdir.mk
+
+# Eclipse metadata (workspace-level, may appear in project)
+.metadata/
+
+# S32 Configuration Tool backup
+*.mex.bak
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor temp files
+*.swp
+*.swo
+*~

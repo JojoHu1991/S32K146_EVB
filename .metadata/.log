@@ -10260,3 +10260,6 @@ ExpressionContext[ child_context = ChildContext[
  $instance = Port_Ip_1
  $group = BOARD_InitPeripherals]]
 ]
+
+!ENTRY com.nxp.swtools.serdes.codegen 4 0 2026-08-31 17:04:48.937
+!MESSAGE [TOOL] No script file found while trying to recompile the codegeneration script for SerDes Config Tool
