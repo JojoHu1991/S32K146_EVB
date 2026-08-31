@@ -1,0 +1,13 @@
+-c
+-I../RTD/include
+-I"D:/Users/rgjjh/workspaceS32DS.3.6.6_1/S32K146_LAB1/board"
+-x assembler-with-cpp
+-g3
+-mcpu=cortex-m4
+-mthumb
+-mlittle-endian
+-mfloat-abi=hard
+-mfpu=fpv4-sp-d16
+-specs=nano.specs
+-specs=nosys.specs
+--sysroot="D:/NXP/S32DS.3.6.6/S32DS/build_tools/gcc_v10.2/gcc-10.2-arm32-eabi/arm-none-eabi/newlib"

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<libraryInfos>
+    <libraryInfo home="D:\NXP\S32DS.3.6.6\eclipse\jre" version="17.0.9"/>
+    <libraryInfo home="D:\NXP\S32DS.3.6.6\eclipse" version="17.0.9"/>
+    <libraryInfo home="D:\Program Files\Java\jdk1.8.0_351" version="1.8.0_351">
+        <bootpath>
+            <entry path="D:\Program Files\Java\jdk1.8.0_351\jre\lib\resources.jar"/>
+            <entry path="D:\Program Files\Java\jdk1.8.0_351\jre\lib\rt.jar"/>
+            <entry path="D:\Program Files\Java\jdk1.8.0_351\jre\lib\jsse.jar"/>
+            <entry path="D:\Program Files\Java\jdk1.8.0_351\jre\lib\jce.jar"/>
+            <entry path="D:\Program Files\Java\jdk1.8.0_351\jre\lib\charsets.jar"/>
+            <entry path="D:\Program Files\Java\jdk1.8.0_351\jre\lib\jfr.jar"/>
+            <entry path="D:\Program Files\Java\jdk1.8.0_351\jre\classes"/>
+        </bootpath>
+        <extensionDirs>
+            <entry path="D:\Program Files\Java\jdk1.8.0_351\jre\lib\ext"/>
+            <entry path="C:\WINDOWS\Sun\Java\lib\ext"/>
+        </extensionDirs>
+        <endorsedDirs>
+            <entry path="D:\Program Files\Java\jdk1.8.0_351\jre\lib\endorsed"/>
+        </endorsedDirs>
+    </libraryInfo>
+</libraryInfos>
