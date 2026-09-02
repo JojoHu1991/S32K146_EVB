@@ -32,9 +32,15 @@
 #include "Mcal.h"
 #include "Clock_Ip.h"
 #include "Port_Ci_Port_Ip.h"
+#include "Lpuart_Uart_Ip.h"
+#include "Lpuart_Uart_Ip_Sa_PBcfg.h"
 
 volatile int exit_code = 0;
 /* User includes */
+
+/* UART 配置 - LPUART1 (PTC6/PTC7), 115200-8-N-1, 经OpenSDA虚拟串口连PC */
+#define UART_INST        LPUART_UART_IP_INSTANCE_USING_1
+#define UART_TX_TIMEOUT  (100000U)   /* 发送超时 us */
 
 /* 红灯控制 - PTD15, 输出高亮/低灭 */
 #define RED_LED_PIN       (15U)
@@ -57,6 +63,35 @@ volatile int exit_code = 0;
 /* 按键读取 - PTC12(SW2) / PTC13(SW3), 按下为高电平(active-high, 内部下拉) */
 #define SW2_PRESSED()      ((IP_PTC->PDIR & (1U << 12)) != 0U)
 #define SW3_PRESSED()      ((IP_PTC->PDIR & (1U << 13)) != 0U)
+
+/* UART 发送字符串 */
+static void uart_puts(const char *s)
+{
+    uint32 len = 0U;
+    while (s[len] != '\0')
+    {
+        len++;
+    }
+    (void)Lpuart_Uart_Ip_SyncSend(UART_INST, (const uint8 *)s, len, UART_TX_TIMEOUT);
+}
+
+/* 打印当前 LED 显示状态 - 1=亮 0=灭, 从 PDOR 寄存器读实际电平 */
+static void print_led_status(void)
+{
+    char buf[48];
+    uint8 r = ((IP_PTD->PDOR & (1U << RED_LED_PIN))   != 0U) ? '1' : '0';
+    uint8 g = ((IP_PTD->PDOR & (1U << GREEN_LED_PIN)) != 0U) ? '1' : '0';
+    uint8 b = ((IP_PTD->PDOR & (1U << BLUE_LED_PIN))  != 0U) ? '1' : '0';
+
+    buf[0]='L'; buf[1]='E'; buf[2]='D'; buf[3]=' ';
+    buf[4]='R'; buf[5]='='; buf[6]=r;   buf[7]=' ';
+    buf[8]='G'; buf[9]='='; buf[10]=g;  buf[11]=' ';
+    buf[12]='B'; buf[13]='='; buf[14]=b; buf[15]=' ';
+    buf[16]='('; buf[17]='1'; buf[18]='='; buf[19]='O'; buf[20]='N'; buf[21]=')';
+    buf[22]='\r'; buf[23]='\n'; buf[24]='\0';
+
+    uart_puts(buf);
+}
 
 /* 软件延时 - 基于48MHz主频, 约1ms (可根据实际主频调整) */
 static void delay_ms(uint32 ms)
@@ -129,6 +164,11 @@ int main(void)
     Port_Ci_Port_Ip_Init(NUM_OF_CONFIGURED_PINS_PortContainer_0_BOARD_InitPeripherals,
                          g_pin_mux_InitConfigArr_PortContainer_0_BOARD_InitPeripherals);
 
+    /* 初始化 UART - LPUART1 (PTC6/PTC7) 115200 */
+    Lpuart_Uart_Ip_Init(UART_INST, &Lpuart_Uart_Ip_xHwConfigPB_1);
+    uart_puts("=== S32K146 LED Status Monitor ===\r\n");
+    print_led_status();
+
     uint32 blue_toggle_cnt = 0U;  /* 蓝灯翻转计时 (ms) */
     uint8  blue_auto = 1U;        /* 蓝灯自动翻转使能 */
     KeyState_t sw2_key = {0};     /* SW2 按键状态 */
@@ -146,6 +186,7 @@ int main(void)
             GREEN_LED_TOGGLE();
             BLUE_LED_OFF();
             blue_auto = 0U;
+            print_led_status();
         }
 
         /* SW3 按下50ms触发 -> 切换红灯 + 关闭蓝灯 */
@@ -154,6 +195,7 @@ int main(void)
             RED_LED_TOGGLE();
             BLUE_LED_OFF();
             blue_auto = 0U;
+            print_led_status();
         }
 
         /* 蓝灯 1Hz 自动翻转 (500ms 亮 + 500ms 灭) */
@@ -161,6 +203,7 @@ int main(void)
         {
             BLUE_LED_TOGGLE();
             blue_toggle_cnt = 0U;
+            print_led_status();
         }
 
         if(exit_code != 0)

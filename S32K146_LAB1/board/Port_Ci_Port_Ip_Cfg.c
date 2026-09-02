@@ -119,6 +119,8 @@ extern "C"{
 PortContainer_0_BOARD_InitPeripherals:
 - options: {callFromInitBoot: 'true', coreID: core0}
 - pin_list:
+  - {pin_num: '117', peripheral: LPUART1, signal: lpuart1_tx, pin_signal: PTC7, direction: OUTPUT}
+  - {pin_num: '118', peripheral: LPUART1, signal: lpuart1_rx, pin_signal: PTC6, direction: INPUT}
   - {pin_num: '70', peripheral: PORTC, signal: 'port, 13', pin_signal: PTC13, direction: INPUT, PE: state_1, PS: state_0}
   - {pin_num: '71', peripheral: PORTC, signal: 'port, 12', pin_signal: PTC12, direction: INPUT, PE: state_1, PS: state_0}
   - {pin_num: '4', peripheral: PORTD, signal: 'port, 0', pin_signal: PTD0, direction: OUTPUT, initValue: state_0}
@@ -158,6 +160,28 @@ Port_Ci_Port_Ip_PinSettingsConfig g_pin_mux_InitConfigArr_PortContainer_0_BOARD_
         .direction       = PORT_CI_PORT_PIN_IN,
         .digitalFilter   = (boolean)FALSE,
         .initValue       = 0U,
+    },
+    {
+        .portBase        = IP_PORTC,
+        .gpioBase        = NULL_PTR,
+        .pinPortIdx      = 6U,
+        .pullConfig      = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .driveStrength   = PORT_DRIVE_STRENGTH_LOW,
+        .passiveFilter   = (boolean)FALSE,
+        .mux             = PORT_MUX_ALT2,
+        .lockRegister    = PORT_LOCK_REGISTER_DISABLED,
+        .digitalFilter   = (boolean)FALSE,
+    },
+    {
+        .portBase        = IP_PORTC,
+        .gpioBase        = NULL_PTR,
+        .pinPortIdx      = 7U,
+        .pullConfig      = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .driveStrength   = PORT_DRIVE_STRENGTH_LOW,
+        .passiveFilter   = (boolean)FALSE,
+        .mux             = PORT_MUX_ALT2,
+        .lockRegister    = PORT_LOCK_REGISTER_DISABLED,
+        .digitalFilter   = (boolean)FALSE,
     },
     {
         .portBase        = IP_PORTD,

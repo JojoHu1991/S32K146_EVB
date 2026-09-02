@@ -704,9 +704,9 @@
 		<COND_TOOLCHAIN_CUSTOM_OPTION/>
 	</storageModule>
 	<storageModule moduleId="com.nxp.s32ds.cle.uct.internal.core.toolchainScriptProfile">
-		<COND_TOOLCHAIN_COMPONENTS_OPTION>COPY=platform.driver.clock;platform.driver.osif;platform.driver.port_ip</COND_TOOLCHAIN_COMPONENTS_OPTION>
+		<COND_TOOLCHAIN_COMPONENTS_OPTION>COPY=platform.driver.clock;platform.driver.osif;platform.driver.lpuart_uart;platform.driver.port_ip</COND_TOOLCHAIN_COMPONENTS_OPTION>
 	</storageModule>
 	<storageModule moduleId="com.nxp.s32ds.cle.uct.core">
-		<sdkComponents>platform.driver.clock;platform.driver.rte_mcu;platform.driver.osif;platform.driver.det;platform.driver.port_ip;platform.driver.rte_port</sdkComponents>
+		<sdkComponents>platform.driver.clock;platform.driver.rte_mcu;platform.driver.osif;platform.driver.det;platform.driver.port_ip;platform.driver.rte_port;platform.driver.rte_uart;platform.driver.lpuart_uart</sdkComponents>
 	</storageModule>
 </cproject>
