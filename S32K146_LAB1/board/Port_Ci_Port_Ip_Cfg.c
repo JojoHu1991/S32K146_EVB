@@ -30,6 +30,7 @@ processor: S32K146
 package_id: S32K146_LQFP144
 mcu_data: PlatformSDK_S32K1_S32M24
 processor_version: 0.0.0
+external_user_signals: {}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -119,6 +120,7 @@ extern "C"{
 PortContainer_0_BOARD_InitPeripherals:
 - options: {callFromInitBoot: 'true', coreID: core0}
 - pin_list:
+  - {pin_num: '61', peripheral: ADC0, signal: adc0_se12, pin_signal: PTC14, direction: INPUT}
   - {pin_num: '117', peripheral: LPUART1, signal: lpuart1_tx, pin_signal: PTC7, direction: OUTPUT}
   - {pin_num: '118', peripheral: LPUART1, signal: lpuart1_rx, pin_signal: PTC6, direction: INPUT}
   - {pin_num: '70', peripheral: PORTC, signal: 'port, 13', pin_signal: PTC13, direction: INPUT, PE: state_1, PS: state_0}
@@ -160,6 +162,17 @@ Port_Ci_Port_Ip_PinSettingsConfig g_pin_mux_InitConfigArr_PortContainer_0_BOARD_
         .direction       = PORT_CI_PORT_PIN_IN,
         .digitalFilter   = (boolean)FALSE,
         .initValue       = 0U,
+    },
+    {
+        .portBase        = IP_PORTC,
+        .gpioBase        = NULL_PTR,
+        .pinPortIdx      = 14U,
+        .pullConfig      = PORT_INTERNAL_PULL_NOT_ENABLED,
+        .driveStrength   = PORT_DRIVE_STRENGTH_LOW,
+        .passiveFilter   = (boolean)FALSE,
+        .mux             = PORT_MUX_ALT0,
+        .lockRegister    = PORT_LOCK_REGISTER_DISABLED,
+        .digitalFilter   = (boolean)FALSE,
     },
     {
         .portBase        = IP_PORTC,

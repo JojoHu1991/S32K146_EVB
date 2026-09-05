@@ -24,6 +24,9 @@
          </generated_project_files>
          <pins_profile>
             <processor_version>0.0.0</processor_version>
+            <external_user_signals>
+               <properties/>
+            </external_user_signals>
          </pins_profile>
          <functions_list>
             <function name="PortContainer_0_BOARD_InitPeripherals">
@@ -34,6 +37,11 @@
                </options>
                <dependencies/>
                <pins>
+                  <pin peripheral="ADC0" signal="adc0_se12" pin_num="61" pin_signal="PTC14">
+                     <pin_features>
+                        <pin_feature name="direction" value="INPUT"/>
+                     </pin_features>
+                  </pin>
                   <pin peripheral="LPUART1" signal="lpuart1_tx" pin_num="117" pin_signal="PTC7">
                      <pin_features>
                         <pin_feature name="direction" value="OUTPUT"/>
@@ -297,6 +305,16 @@
                   <data type="Version">1.0.0</data>
                </feature>
             </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.adc_ip" description="工具链/IDE工程中未找到adc_ip。工程不会被编译！" problem_level="2" source="Peripherals">
+               <feature name="enabled" evaluation="equal">
+                  <data type="Boolean">true</data>
+               </feature>
+            </dependency>
+            <dependency resourceType="SWComponent" resourceId="platform.driver.adc_ip" description="工具链/IDE工程不支持adc_ip版本。所需值: ${required_value}, 实际值: ${actual_value}. 工程可能没有被正确编译。" problem_level="1" source="Peripherals">
+               <feature name="version" evaluation="equivalent">
+                  <data type="Version">1.0.0</data>
+               </feature>
+            </dependency>
             <dependency resourceType="Tool" resourceId="Clocks" description="外围设备工具需要 Clocks 工具，但它已被禁用。" problem_level="2" source="Peripherals">
                <feature name="enabled" evaluation="equal">
                   <data>true</data>
@@ -304,6 +322,9 @@
             </dependency>
          </dependencies>
          <generated_project_files>
+            <file path="generate/include/Adc_Ip_Cfg.h" update_enabled="true"/>
+            <file path="generate/include/Adc_Ip_CfgDefines.h" update_enabled="true"/>
+            <file path="generate/include/Adc_Ip_PBcfg.h" update_enabled="true"/>
             <file path="generate/include/DeviceDefinition.h" update_enabled="true"/>
             <file path="generate/include/Lpuart_Uart_Ip_Cfg.h" update_enabled="true"/>
             <file path="generate/include/Lpuart_Uart_Ip_Defines.h" update_enabled="true"/>
@@ -313,6 +334,7 @@
             <file path="generate/include/Port_Ci_Port_Ip_Defines.h" update_enabled="true"/>
             <file path="generate/include/Soc_Ips.h" update_enabled="true"/>
             <file path="generate/include/modules.h" update_enabled="true"/>
+            <file path="generate/src/Adc_Ip_PBcfg.c" update_enabled="true"/>
             <file path="generate/src/Lpuart_Uart_Ip_Sa_PBcfg.c" update_enabled="true"/>
             <file path="generate/src/OsIf_Cfg.c" update_enabled="true"/>
          </generated_project_files>
@@ -446,6 +468,57 @@
                               </struct>
                            </array>
                         </struct>
+                     </config_set>
+                  </instance>
+                  <instance name="Adc_Ip" uuid="e0b03f42-6075-4e63-9aab-5a428d3d4377" type="Adc_Ip" type_id="Adc_Ip" mode="ip" enabled="true" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="Adc_Ip">
+                        <setting name="Name" value="Adc_Ip"/>
+                        <struct name="AdcIpGeneral">
+                           <setting name="Name" value="AdcIpGeneral"/>
+                           <setting name="AdcIpDevErrorDetect" value="false"/>
+                           <setting name="AdcIplTimeoutMethod" value="OSIF_COUNTER_DUMMY"/>
+                           <setting name="AdcIplTimeoutVal" value="10000"/>
+                           <setting name="AdcIpEnableUserModeSupport" value="false"/>
+                           <setting name="AdcIpEnableAsyncCalibration" value="false"/>
+                           <setting name="AdcEnableSimSupplyMonitor" value="false"/>
+                           <setting name="AdcEnableSimSourceSelection" value="false"/>
+                           <setting name="AdcIpOptimizeGetConvData" value="false"/>
+                        </struct>
+                        <array name="AdcHwUnit">
+                           <struct name="0">
+                              <setting name="Name" value="AdcHwUnit_0"/>
+                              <setting name="AdcHwUnitId" value="ADC0"/>
+                              <setting name="AdcPrescale" value="1"/>
+                              <setting name="AdcCalibrationPrescale" value="8"/>
+                              <setting name="AdcHardwareAverageEnable" value="false"/>
+                              <setting name="AdcHardwareAverageSelect" value="SAMPLES_4"/>
+                              <setting name="AdcSampleTimeDuration" value="1"/>
+                              <setting name="AdcHwUnitUsrOffset" value="0"/>
+                              <setting name="AdcHwUnitUsrGain" value="4"/>
+                              <setting name="AdcHwUnitResolution" value="RESOLUTION_12"/>
+                              <setting name="AdcHwUnitDmaEnable" value="false"/>
+                              <setting name="AdcHwUnitTriggerMode" value="TRIGGER_SOFTWARE"/>
+                              <setting name="AdcHwUnitPreTriggerSrc" value="PRETRIGGER_SEL_PDB"/>
+                              <setting name="AdcHwUnitTriggerSrc" value="TRIGGER_SEL_PDB"/>
+                              <setting name="AdcHwUnitVref" value="VOLTAGEREF_VREF"/>
+                              <setting name="AdcHwUnitContEnable" value="false"/>
+                              <setting name="AdcHwUnitIntSupplyMonitor" value="false"/>
+                              <setting name="AdcHwUnitCompareEnable" value="false"/>
+                              <setting name="AdcHwUnitCompareGreaterThanEnable" value="false"/>
+                              <setting name="AdcHwUnitCompareRangeFuncEnable" value="false"/>
+                              <setting name="AdcHwUnitCompVal1" value="0"/>
+                              <setting name="AdcHwUnitCompVal2" value="0"/>
+                              <setting name="AdcHwUnitConvCompleteNotif" value="adc_Potentiometer_Complete_Notification"/>
+                              <array name="AdcChannel">
+                                 <struct name="0">
+                                    <setting name="Name" value="AdcChannel_0"/>
+                                    <setting name="AdcControlChannel" value="0"/>
+                                    <setting name="AdcChannelName" value="SE12_ADCH12"/>
+                                    <setting name="AdcInterruptEnable" value="false"/>
+                                 </struct>
+                              </array>
+                           </struct>
+                        </array>
                      </config_set>
                   </instance>
                </instances>

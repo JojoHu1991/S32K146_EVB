@@ -34,6 +34,9 @@
 #include "Port_Ci_Port_Ip.h"
 #include "Lpuart_Uart_Ip.h"
 #include "Lpuart_Uart_Ip_Sa_PBcfg.h"
+#include "Adc_Ip.h"
+#include "Adc_Ip_PBcfg.h"
+#include "Dr_Adc/Dr_Adc.h"
 
 volatile int exit_code = 0;
 /* User includes */
@@ -169,16 +172,28 @@ int main(void)
     uart_puts("=== S32K146 LED Status Monitor ===\r\n");
     print_led_status();
 
+    /* 初始化 ADC0 - 电位计 PTC14 (ADC0_SE12), 12bit, 软件触发 */
+    Adc_Ip_Init(0U, &AdcHwUnit_0);
+
     uint32 blue_toggle_cnt = 0U;  /* 蓝灯翻转计时 (ms) */
     uint8  blue_auto = 1U;        /* 蓝灯自动翻转使能 */
     KeyState_t sw2_key = {0};     /* SW2 按键状态 */
     KeyState_t sw3_key = {0};     /* SW3 按键状态 */
+    uint32 pot_cnt = 0U;          /* 电位计打印计时 (ms) */
 
     for(;;)
     {
         /* 10ms 循环周期, 兼顾蓝灯计时和按键扫描 */
         delay_ms(10U);
         blue_toggle_cnt += 10U;
+        pot_cnt += 10U;
+
+        /* 每500ms采样并打印电位计位置 */
+        if (pot_cnt >= 500U)
+        {
+            pot_cnt = 0U;
+            Dr_Adc_PrintPotentiometer(Dr_Adc_ReadPotentiometer());
+        }
 
         /* SW2 按下50ms触发 -> 切换绿灯 + 关闭蓝灯 */
         if (key_scan(&sw2_key, SW2_PRESSED() ? 1U : 0U))
